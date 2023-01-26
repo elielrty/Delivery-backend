@@ -1,0 +1,196 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String        @id @default(uuid())
+  name      String
+  email     String        @unique
+  password  String
+  isAdmin   Boolean       @default(false)
+  phone     String?
+  addresses UserAddress[]
+  createdAt DateTime      @default(now())
+  deleteAt  DateTime?
+  updateAt  DateTime?
+  createBy  String?
+  updateBy  String?
+  deleteBy  String?
+  UserToken UserToken[]
+
+  @@map("users")
+}
+
+model UserAddress {
+  id           String     @id @default(uuid())
+  street       String
+  neighborhood String
+  cep          String
+  number       String
+  state        String
+  city         String
+  complement   String?
+  reference    String?
+  user         User       @relation(fields: [user_id], references: [id])
+  user_id      String
+  Requests     Requests[]
+  createdAt    DateTime   @default(now())
+  deleteAt     DateTime?
+  updateAt     DateTime?
+  createBy     String
+  updateBy     String?
+  deleteBy     String?
+
+  @@map("users_addresses")
+}
+
+model CategoryProduct {
+  id        String    @id @default(uuid())
+  name      String
+  type      String
+  Product   Product[]
+  createdAt DateTime  @default(now())
+  deleteAt  DateTime?
+  updateAt  DateTime?
+  createBy  String
+  updateBy  String?
+  deleteBy  String?
+
+  @@map("categories_products")
+}
+
+model Product {
+  id                String             @id @default(uuid())
+  description       String
+  value             String
+  isDiscount        Boolean
+  type              String
+  category          CategoryProduct    @relation(fields: [category_id], references: [id])
+  category_id       String
+  requests_products RequestsProducts[]
+  createdAt         DateTime           @default(now())
+  deleteAt          DateTime?
+  updateAt          DateTime?
+  createBy          String
+  updateBy          String?
+  deleteBy          String?
+
+  @@map("products")
+}
+
+model CategoryCommerce {
+  id          String     @id @default(uuid())
+  name        String
+  description String
+  Commerce    Commerce[]
+  createdAt   DateTime   @default(now())
+  deleteAt    DateTime?
+  updateAt    DateTime?
+  createBy    String
+  updateBy    String?
+  deleteBy    String?
+
+  @@map("categories_commerces")
+}
+
+model Commerce {
+  id              String            @id @default(uuid())
+  name            String
+  cnpj            String
+  isOpen          Boolean           @default(false)
+  phone           String
+  category        CategoryCommerce  @relation(fields: [category_id], references: [id])
+  category_id     String
+  CommerceAddress CommerceAddress[]
+  Requests        Requests[]
+  createdAt       DateTime          @default(now())
+  deleteAt        DateTime?
+  updateAt        DateTime?
+  createBy        String
+  updateBy        String?
+  deleteBy        String?
+
+  @@map("commerces")
+}
+
+model CommerceAddress {
+  id           String    @id @default(uuid())
+  street       String
+  neighborhood String
+  cep          String
+  number       String
+  state        String
+  city         String
+  complement   String?
+  reference    String?
+  commerces    Commerce  @relation(fields: [commerce_id], references: [id])
+  commerce_id  String
+  createdAt    DateTime  @default(now())
+  deleteAt     DateTime?
+  updateAt     DateTime?
+  createBy     String
+  updateBy     String?
+  deleteBy     String?
+
+  @@map("commerces_address")
+}
+
+model Requests {
+  id                String             @id @default(uuid())
+  value             Decimal
+  status            String
+  address           UserAddress        @relation(fields: [address_id], references: [id])
+  address_id        String
+  commerces         Commerce           @relation(fields: [commerce_id], references: [id])
+  commerce_id       String
+  requests_products RequestsProducts[]
+  createdAt         DateTime           @default(now())
+  deleteAt          DateTime?
+  updateAt          DateTime?
+  createBy          String
+  updateBy          String?
+  deleteBy          String?
+
+  @@map("requests")
+}
+
+model RequestsProducts {
+  id         String    @id @default(uuid())
+  request    Requests  @relation(fields: [request_id], references: [id])
+  request_id String
+  product    Product   @relation(fields: [product_id], references: [id])
+  product_id String
+  createdAt  DateTime  @default(now())
+  deleteAt   DateTime?
+  updateAt   DateTime?
+  createBy   String
+  updateBy   String?
+  deleteBy   String?
+
+  @@map("requests_products")
+}
+
+model UserToken {
+  id            String    @id @default(uuid())
+  refresh_token String
+  fcm_token     Boolean   @default(false)
+  expires_date  DateTime
+  user          User      @relation(fields: [user_id], references: [id])
+  user_id       String
+  createdAt     DateTime  @default(now())
+  deleteAt      DateTime?
+  updateAt      DateTime?
+  createBy      String
+  updateBy      String?
+  deleteBy      String?
+
+  @@map("users_tokens")
+}

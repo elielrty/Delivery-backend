@@ -1,0 +1,516 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "MRLeague API",
+    "description": "MRLeague",
+    "version": "1.0.0",
+    "contact": {
+      "email": "alancintra7@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/api/v1"
+    }
+  ],
+  "paths": {
+    "/sessions/authenticate": {
+      "post": {
+        "tags": ["Session"],
+        "summary": "Authenticate User",
+        "description": "Authenticate User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/sessions/refresh-token": {
+      "post": {
+        "tags": ["Session"],
+        "summary": "Refresh Token",
+        "description": "Refresh User Token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refresh_token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Invalid Refresh Token"
+          },
+          "404": {
+            "description": "Refresh Token not found"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create User",
+        "description": "Create User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Validation Failed"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update User",
+        "description": "Update User",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "is_player": {
+                    "type": "boolean"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "birthdate": {
+                    "type": "string",
+                    "example": "yyyy-mm-dd"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "weight": {
+                    "type": "number"
+                  }
+                },
+                "required": ["name", "email", "is_player"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete User",
+        "description": "Delete User",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/leagues": {
+      "post": {
+        "tags": ["Leagues"],
+        "summary": "Create League",
+        "description": "Create League",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/League"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Owner not Found"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Leagues"],
+        "summary": "Find League",
+        "description": "Find League",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Find league by name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "description": "Find league by startDate",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "yyyy-mm-dd"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/leagues/{id}": {
+      "put": {
+        "tags": ["Leagues"],
+        "summary": "Update League",
+        "description": "Update League",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "League ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "is_private": {
+                    "type": "boolean"
+                  },
+                  "start_date": {
+                    "type": "string",
+                    "example": "yyyy-mm-dd"
+                  },
+                  "end_date": {
+                    "type": "string",
+                    "example": "yyyy-mm-dd"
+                  },
+                  "teams_size": {
+                    "type": "integer"
+                  },
+                  "postal-code": {
+                    "type": "string"
+                  },
+                  "place": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "neighborhood": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "is_private",
+                  "start_date",
+                  "end_date",
+                  "teams_size",
+                  "postal_code",
+                  "place",
+                  "number",
+                  "neighborhood",
+                  "city",
+                  "state"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation Failed"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "League not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Leagues"],
+        "summary": "Delete League",
+        "description": "Delete League",
+        "security": [
+          { "bearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "League ID",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "League not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "is_player": {
+          "type": "boolean"
+        },
+        "position": {
+          "type": "string"
+        },
+        "birthdate": {
+          "type": "string",
+          "example": "yyyy-mm-dd"
+        },
+        "height": {
+          "type": "number"
+        },
+        "weight": {
+          "type": "number"
+        }
+      },
+      "required": ["name", "email", "password", "is_player"]
+    },
+    "League": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "is_private": {
+          "type": "boolean"
+        },
+        "start_date": {
+          "type": "string",
+          "example": "yyyy-mm-dd"
+        },
+        "end_date": {
+          "type": "string",
+          "example": "yyyy-mm-dd"
+        },
+        "teams_size": {
+          "type": "integer"
+        },
+        "postal_code": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "neighborhood": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "owner_id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "is_private",
+        "start_date",
+        "end_date",
+        "teams_size",
+        "postal_code",
+        "place",
+        "number",
+        "neighborhood",
+        "city",
+        "state",
+        "owner_id"
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
