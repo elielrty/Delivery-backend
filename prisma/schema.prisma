@@ -45,7 +45,7 @@ model UserAddress {
   createdAt    DateTime   @default(now())
   deleteAt     DateTime?
   updateAt     DateTime?
-  createBy     String
+  createBy     String?
   updateBy     String?
   deleteBy     String?
 
@@ -60,7 +60,7 @@ model CategoryProduct {
   createdAt DateTime  @default(now())
   deleteAt  DateTime?
   updateAt  DateTime?
-  createBy  String
+  createBy  String?
   updateBy  String?
   deleteBy  String?
 
@@ -79,7 +79,7 @@ model Product {
   createdAt         DateTime           @default(now())
   deleteAt          DateTime?
   updateAt          DateTime?
-  createBy          String
+  createBy          String?
   updateBy          String?
   deleteBy          String?
 
@@ -94,7 +94,7 @@ model CategoryCommerce {
   createdAt   DateTime   @default(now())
   deleteAt    DateTime?
   updateAt    DateTime?
-  createBy    String
+  createBy    String?
   updateBy    String?
   deleteBy    String?
 
@@ -114,7 +114,7 @@ model Commerce {
   createdAt       DateTime          @default(now())
   deleteAt        DateTime?
   updateAt        DateTime?
-  createBy        String
+  createBy        String?
   updateBy        String?
   deleteBy        String?
 
@@ -136,7 +136,7 @@ model CommerceAddress {
   createdAt    DateTime  @default(now())
   deleteAt     DateTime?
   updateAt     DateTime?
-  createBy     String
+  createBy     String?
   updateBy     String?
   deleteBy     String?
 
@@ -155,7 +155,7 @@ model Requests {
   createdAt         DateTime           @default(now())
   deleteAt          DateTime?
   updateAt          DateTime?
-  createBy          String
+  createBy          String?
   updateBy          String?
   deleteBy          String?
 
@@ -171,7 +171,7 @@ model RequestsProducts {
   createdAt  DateTime  @default(now())
   deleteAt   DateTime?
   updateAt   DateTime?
-  createBy   String
+  createBy   String?
   updateBy   String?
   deleteBy   String?
 
@@ -188,7 +188,7 @@ model UserToken {
   createdAt     DateTime  @default(now())
   deleteAt      DateTime?
   updateAt      DateTime?
-  createBy      String
+  createBy      String?
   updateBy      String?
   deleteBy      String?
 

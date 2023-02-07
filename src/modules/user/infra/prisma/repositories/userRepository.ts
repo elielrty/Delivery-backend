@@ -22,9 +22,10 @@ export class UserRepository implements IUserRepository {
   }
 
   public async update(user: User): Promise<User> {
+    const raw = UserMappers.toPrisma(user);
     const userUpdate = await prismaClient.user.update({
       where: { id: user.id },
-      data: user,
+      data: raw,
     });
 
     return UserMappers.toDomain(userUpdate);

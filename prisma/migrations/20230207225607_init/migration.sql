@@ -31,7 +31,7 @@ CREATE TABLE "users_addresses" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -46,7 +46,7 @@ CREATE TABLE "categories_products" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -64,7 +64,7 @@ CREATE TABLE "products" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -79,7 +79,7 @@ CREATE TABLE "categories_commerces" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -97,7 +97,7 @@ CREATE TABLE "commerces" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -119,7 +119,7 @@ CREATE TABLE "commerces_address" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -136,7 +136,7 @@ CREATE TABLE "requests" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -151,7 +151,7 @@ CREATE TABLE "requests_products" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
@@ -168,7 +168,7 @@ CREATE TABLE "users_tokens" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
-    "createBy" TEXT NOT NULL,
+    "createBy" TEXT,
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
