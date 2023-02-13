@@ -3,6 +3,8 @@ import './providers';
 
 import { CategoryCommerceRepository } from '@modules/commerce/infra/prisma/repositories/categoryCommerceRepository';
 import { ICategoryCommerceRepository } from '@modules/commerce/repositories/ICategoryCommerceRepository';
+import { CategoryProductRepository } from '@modules/products/infra/prisma/repositories/categoryProductRepository';
+import { ICategoryProductRepository } from '@modules/products/repositories/ICategoryProductsRepository';
 import { UserRepository } from '@modules/user/infra/prisma/repositories/userRepository';
 import { UserTokensRepository } from '@modules/user/infra/prisma/repositories/userTokensRepository';
 import { IUserRepository } from '@modules/user/repositories/IUserRepository';
@@ -19,4 +21,9 @@ container.registerSingleton<IUserTokensRepository>(
 container.registerSingleton<ICategoryCommerceRepository>(
   'CategoryCommerceRepository',
   CategoryCommerceRepository,
+);
+
+container.registerSingleton<ICategoryProductRepository>(
+  'CategoryProductRepository',
+  CategoryProductRepository,
 );
