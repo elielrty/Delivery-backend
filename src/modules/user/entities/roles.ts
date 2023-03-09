@@ -2,26 +2,22 @@ import { randomUUID } from 'crypto';
 
 import { Replace } from '@shared/helpers/Replace';
 
-export interface ICategoryProductProps {
+export interface IRolesProps {
   id?: string;
-  name: string;
-  type: string;
+  role: string;
   createdAt: Date;
   deleteAt?: Date | null;
   updateAt?: Date | null;
-  createBy?: string;
-  updateBy?: string;
+  createBy?: string | null;
+  updateBy?: string | null;
   deleteBy?: string | null;
 }
 
-export class CategoryProduct {
+export class Roles {
   private readonly _id: string;
-  private readonly props: ICategoryProductProps;
+  private readonly props: IRolesProps;
 
-  constructor(
-    props: Replace<ICategoryProductProps, { createdAt?: Date }>,
-    id?: string,
-  ) {
+  constructor(props: Replace<IRolesProps, { createdAt?: Date }>, id?: string) {
     this._id = id ?? randomUUID();
     this.props = {
       ...props,
@@ -29,20 +25,12 @@ export class CategoryProduct {
     };
   }
 
-  public set name(name: string) {
-    this.props.name = name;
+  public set role(role: string) {
+    this.props.role = role;
   }
 
-  public get name() {
-    return this.props.name;
-  }
-
-  public set type(type: string) {
-    this.props.type = type;
-  }
-
-  public get type() {
-    return this.props.type;
+  public get role() {
+    return this.props.role;
   }
 
   public get createdAt(): Date {
@@ -65,19 +53,19 @@ export class CategoryProduct {
     this.props.updateAt = updateAt;
   }
 
-  public set createBy(createBy: string | undefined) {
+  public set createBy(createBy: string | null | undefined) {
     this.props.createBy = createBy;
   }
 
-  public get createBy(): string | undefined {
+  public get createBy(): string | null | undefined {
     return this.props.createBy;
   }
 
-  public set updateBy(updateBy: string | undefined) {
+  public set updateBy(updateBy: string | null | undefined) {
     this.props.updateBy = updateBy;
   }
 
-  public get updateBy(): string | undefined {
+  public get updateBy(): string | null | undefined {
     return this.props.updateBy;
   }
 

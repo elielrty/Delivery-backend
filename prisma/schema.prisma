@@ -25,6 +25,7 @@ model User {
   updateBy  String?
   deleteBy  String?
   UserToken UserToken[]
+  UserRole  UserRole[]
 
   @@map("users")
 }
@@ -70,9 +71,9 @@ model CategoryProduct {
 model Product {
   id                String             @id @default(uuid())
   description       String
+  name              String
   value             String
   isDiscount        Boolean
-  type              String
   category          CategoryProduct    @relation(fields: [category_id], references: [id])
   category_id       String
   requests_products RequestsProducts[]
@@ -87,16 +88,16 @@ model Product {
 }
 
 model CategoryCommerce {
-  id          String     @id @default(uuid())
-  name        String
-  description String
-  Commerce    Commerce[]
-  createdAt   DateTime   @default(now())
-  deleteAt    DateTime?
-  updateAt    DateTime?
-  createBy    String?
-  updateBy    String?
-  deleteBy    String?
+  id        String     @id @default(uuid())
+  name      String
+  type      String
+  Commerce  Commerce[]
+  createdAt DateTime   @default(now())
+  deleteAt  DateTime?
+  updateAt  DateTime?
+  createBy  String?
+  updateBy  String?
+  deleteBy  String?
 
   @@map("categories_commerces")
 }
@@ -193,4 +194,34 @@ model UserToken {
   deleteBy      String?
 
   @@map("users_tokens")
+}
+
+model Role {
+  id        String     @id @default(uuid())
+  role      String
+  createdAt DateTime   @default(now())
+  deleteAt  DateTime?
+  updateAt  DateTime?
+  createBy  String?
+  updateBy  String?
+  deleteBy  String?
+  UserRole  UserRole[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [user_id], references: [id])
+  user_id   String
+  role      Role      @relation(fields: [role_id], references: [id])
+  role_id   String
+  createdAt DateTime  @default(now())
+  deleteAt  DateTime?
+  updateAt  DateTime?
+  createBy  String?
+  updateBy  String?
+  deleteBy  String?
+
+  @@map("users_roles")
 }
