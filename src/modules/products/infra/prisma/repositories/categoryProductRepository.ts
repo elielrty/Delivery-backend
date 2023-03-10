@@ -2,7 +2,7 @@ import { ICategoryProductRepository } from '@modules/products/repositories/ICate
 
 import { prismaClient } from '@shared/infra/dataBase/prisma/prismaClient';
 
-import { CategoryProduct} from '../../../entities/categoryProduct';
+import { CategoryProduct } from '../../../entities/categoryProduct';
 import { CategoryProductMappers } from '../mappers/categoryProductMappers';
 
 export class CategoryProductRepository implements ICategoryProductRepository {
