@@ -2,10 +2,13 @@ import { randomUUID } from 'crypto';
 
 import { Replace } from '@shared/helpers/Replace';
 
-export interface ICategoryProductProps {
+export interface IProductProps {
   id?: string;
   name: string;
-  type: string;
+  description: string;
+  value: string;
+  isDiscount: boolean;
+  category_id: string;
   createdAt: Date;
   deleteAt?: Date | null;
   updateAt?: Date | null;
@@ -14,12 +17,12 @@ export interface ICategoryProductProps {
   deleteBy?: string | null;
 }
 
-export class CategoryProduct {
+export class Product {
   private readonly _id: string;
-  private readonly props: ICategoryProductProps;
+  private readonly props: IProductProps;
 
   constructor(
-    props: Replace<ICategoryProductProps, { createdAt?: Date }>,
+    props: Replace<IProductProps, { createdAt?: Date }>,
     id?: string,
   ) {
     this._id = id ?? randomUUID();
@@ -37,12 +40,36 @@ export class CategoryProduct {
     return this.props.name;
   }
 
-  public set type(type: string) {
-    this.props.type = type;
+  public set description(description: string) {
+    this.props.description = description;
   }
 
-  public get type() {
-    return this.props.type;
+  public get description() {
+    return this.props.description;
+  }
+
+  public set value(value: string) {
+    this.props.value = value;
+  }
+
+  public get value() {
+    return this.props.value;
+  }
+
+  public set isDiscount(isDiscount: boolean) {
+    this.props.isDiscount = isDiscount;
+  }
+
+  public get isDiscount() {
+    return this.props.isDiscount;
+  }
+
+  public set category_id(category_id: string) {
+    this.props.category_id = category_id;
+  }
+
+  public get category_id() {
+    return this.props.category_id;
   }
 
   public get createdAt(): Date {
