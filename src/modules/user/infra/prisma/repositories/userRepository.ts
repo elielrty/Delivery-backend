@@ -12,7 +12,9 @@ export class UserRepository implements IUserRepository {
   }
 
   public async findByEmail(email: string): Promise<User | null> {
-    const user = await prismaClient.user.findUnique({ where: { email } });
+    const user = await prismaClient.user.findFirst({
+      where: { email, deleteAt: null },
+    });
 
     if (!user) {
       return null;
@@ -32,7 +34,9 @@ export class UserRepository implements IUserRepository {
   }
 
   public async findById(id: string): Promise<User | null> {
-    const user = await prismaClient.user.findUnique({ where: { id } });
+    const user = await prismaClient.user.findFirst({
+      where: { id, deleteAt: null },
+    });
 
     if (!user) {
       return null;

@@ -10,6 +10,7 @@ export class UserMappers {
       password: user.password,
       isAdmin: user.isAdmin,
       phone: user.phone,
+      deleteAt: user.deleteAt,
       updateBy: user.updateBy,
       updateAt: user.updateAt,
       deleteBy: user.deleteBy,

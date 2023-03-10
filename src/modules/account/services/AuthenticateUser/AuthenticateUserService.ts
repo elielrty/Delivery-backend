@@ -1,5 +1,6 @@
 import { authConfig } from '@config/auth';
 import { User } from '@modules/user/entities/user';
+import { UserToken } from '@modules/user/entities/userToken';
 import { IHashProvider } from '@modules/user/providers/HashProvider/models/IHashProvider';
 import { IUserRepository } from '@modules/user/repositories/IUserRepository';
 import { IUserTokensRepository } from '@modules/user/repositories/IUserTokensRepository';
@@ -39,6 +40,8 @@ export class AuthenticateUserService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const findUserByEmail = await this.userRepository.findByEmail(email);
 
+    console.log(findUserByEmail);
+
     if (!findUserByEmail) {
       throw new AppError('E-mail ou senha incorretos!', 401);
     }
@@ -77,11 +80,16 @@ export class AuthenticateUserService {
     );
     expires_date.setUTCDate(this.dateProvider.getDay(now));
 
-    await this.userTokensRepository.create({
+    // console.log(findUserByEmail);
+
+    const userToken = new UserToken({
       user_id: findUserByEmail.id,
       refresh_token,
       expires_date,
+      fcm_token: false,
     });
+
+    await this.userTokensRepository.create(userToken);
 
     return {
       user: findUserByEmail,

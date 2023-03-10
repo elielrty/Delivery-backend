@@ -9,7 +9,10 @@ export class UserTokenMappers {
       fcm_token: userToken.fcm_token,
       refresh_token: userToken.refresh_token,
       user_id: userToken.user_id,
-      createBy: userToken.createBy ? userToken.createBy : '',
+      createBy: userToken.createBy ? userToken.createBy : userToken.user_id,
+      updateBy: userToken.updateBy,
+      updateAt: userToken.updateAt,
+      deleteBy: userToken.deleteBy,
     };
   }
 

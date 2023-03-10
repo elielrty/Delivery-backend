@@ -43,7 +43,7 @@ export class UserToken {
     this.props.fcm_token = fcm_token || false;
   }
 
-  public get fcm_token() {
+  public get fcm_token(): boolean {
     return this.props.fcm_token;
   }
 

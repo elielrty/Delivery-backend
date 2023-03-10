@@ -60,7 +60,7 @@ usersRouter.delete(
   ensureAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.number().required(),
+      id: Joi.string().uuid().required(),
     },
   }),
   deleteUserController.handle,

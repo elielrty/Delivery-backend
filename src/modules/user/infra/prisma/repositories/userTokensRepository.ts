@@ -8,6 +8,7 @@ import { UserTokenMappers } from '../mappers/userTokenMappers';
 export class UserTokensRepository implements IUserTokensRepository {
   public async create(userToken: UserToken): Promise<UserToken> {
     const raw = UserTokenMappers.toPrisma(userToken);
+    console.log(raw);
 
     const token = await prismaClient.userToken.create({ data: raw });
 
