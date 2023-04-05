@@ -26,6 +26,16 @@ export class RolesRepository implements IRolesRepository {
     return RolesMappers.toDomain(RolesUpdate);
   }
 
+  public async findByRole(role: string): Promise<Roles | null> {
+    const Roles = await prismaClient.role.findFirst({ where: { role } });
+
+    if (!Roles) {
+      return null;
+    }
+
+    return RolesMappers.toDomain(Roles);
+  }
+
   public async findById(id: string): Promise<Roles | null> {
     const Roles = await prismaClient.role.findUnique({ where: { id } });
 

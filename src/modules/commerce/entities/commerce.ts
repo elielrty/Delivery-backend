@@ -1,30 +1,34 @@
+import { User } from '@modules/user/entities/user';
 import { randomUUID } from 'crypto';
 
 import { Replace } from '@shared/helpers/Replace';
 
-import { Roles } from './roles';
+import { CategoryCommerce } from './categoryCommerce';
 
-export interface IUserProps {
+export interface ICategoryCommerceProps {
   id?: string;
   name: string;
-  email: string;
-  password: string;
-  phone: string | null;
-  isAdmin: boolean;
-  roles?: Roles[];
+  cnpj: string;
+  isOpen: boolean;
+  phone: string;
+  users?: User[];
+  category: CategoryCommerce;
   createdAt: Date;
   deleteAt?: Date | null;
   updateAt?: Date | null;
-  createBy?: string | null;
-  updateBy?: string | null;
+  createBy?: string;
+  updateBy?: string;
   deleteBy?: string | null;
 }
 
-export class User {
+export class Commerce {
   private readonly _id: string;
-  private readonly props: IUserProps;
+  private readonly props: ICategoryCommerceProps;
 
-  constructor(props: Replace<IUserProps, { createdAt?: Date }>, id?: string) {
+  constructor(
+    props: Replace<ICategoryCommerceProps, { createdAt?: Date }>,
+    id?: string,
+  ) {
     this._id = id ?? randomUUID();
     this.props = {
       ...props,
@@ -40,44 +44,44 @@ export class User {
     return this.props.name;
   }
 
-  public get roles(): Roles[] | undefined {
-    return this.props.roles;
+  public get users(): User[] | undefined {
+    return this.props.users;
   }
 
-  public set roles(roles: Roles[] | undefined) {
-    this.props.roles = roles;
+  public set users(users: User[] | undefined) {
+    this.props.users = users;
   }
 
-  public set email(email: string) {
-    this.props.email = email;
+  public get category(): CategoryCommerce {
+    return this.props.category;
   }
 
-  public get email() {
-    return this.props.email;
+  public set category(category: CategoryCommerce) {
+    this.props.category = category;
   }
 
-  public set password(password: string) {
-    this.props.password = password;
+  public set cnpj(cnpj: string) {
+    this.props.cnpj = cnpj;
   }
 
-  public get password() {
-    return this.props.password;
+  public get cnpj() {
+    return this.props.cnpj;
+  }
+
+  public set isOpen(isOpen: boolean) {
+    this.props.isOpen = isOpen;
+  }
+
+  public get isOpen() {
+    return this.props.isOpen;
   }
 
   public set phone(phone: string) {
-    this.props.phone = phone;
+    this.props.cnpj = phone;
   }
 
   public get phone() {
-    return this.props.phone || '';
-  }
-
-  public set isAdmin(isAdmin: boolean) {
-    this.props.isAdmin = isAdmin;
-  }
-
-  public get isAdmin() {
-    return this.props.isAdmin;
+    return this.props.phone;
   }
 
   public get createdAt(): Date {
@@ -100,19 +104,19 @@ export class User {
     this.props.updateAt = updateAt;
   }
 
-  public set createBy(createBy: string | null | undefined) {
+  public set createBy(createBy: string | undefined) {
     this.props.createBy = createBy;
   }
 
-  public get createBy(): string | null | undefined {
+  public get createBy(): string | undefined {
     return this.props.createBy;
   }
 
-  public set updateBy(updateBy: string | null | undefined) {
+  public set updateBy(updateBy: string | undefined) {
     this.props.updateBy = updateBy;
   }
 
-  public get updateBy(): string | null | undefined {
+  public get updateBy(): string | undefined {
     return this.props.updateBy;
   }
 

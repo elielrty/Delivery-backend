@@ -20,7 +20,7 @@ export class CreateProductService {
     category_id,
     user_id,
   }: ICreateProductDTO): Promise<Product> {
-    const checkProduct = await this.ProductRepository.findByName(description);
+    const checkProduct = await this.ProductRepository.findByName(name);
 
     if (checkProduct) {
       throw new AppError(' Product already exists', 400);

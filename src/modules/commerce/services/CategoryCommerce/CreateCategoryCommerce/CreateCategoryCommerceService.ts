@@ -14,7 +14,7 @@ export class CreateCategoryCommerceService {
 
   public async execute({
     name,
-    description,
+    type,
     user_id,
   }: ICreateCategoryCommerceDTO): Promise<CategoryCommerce> {
     const checkCategoryCommerce =
@@ -25,7 +25,7 @@ export class CreateCategoryCommerceService {
     }
 
     const category = new CategoryCommerce({
-      description,
+      type,
       name,
       createBy: user_id,
     });

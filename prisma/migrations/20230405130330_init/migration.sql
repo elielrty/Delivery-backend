@@ -17,28 +17,6 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "users_addresses" (
-    "id" TEXT NOT NULL,
-    "street" TEXT NOT NULL,
-    "neighborhood" TEXT NOT NULL,
-    "cep" TEXT NOT NULL,
-    "number" TEXT NOT NULL,
-    "state" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "complement" TEXT,
-    "reference" TEXT,
-    "user_id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deleteAt" TIMESTAMP(3),
-    "updateAt" TIMESTAMP(3),
-    "createBy" TEXT,
-    "updateBy" TEXT,
-    "deleteBy" TEXT,
-
-    CONSTRAINT "users_addresses_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "categories_products" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -58,7 +36,7 @@ CREATE TABLE "products" (
     "id" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "value" TEXT NOT NULL,
+    "value" DECIMAL(65,30) NOT NULL,
     "isDiscount" BOOLEAN NOT NULL,
     "category_id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -105,7 +83,7 @@ CREATE TABLE "commerces" (
 );
 
 -- CreateTable
-CREATE TABLE "commerces_address" (
+CREATE TABLE "address" (
     "id" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "neighborhood" TEXT NOT NULL,
@@ -115,7 +93,6 @@ CREATE TABLE "commerces_address" (
     "city" TEXT NOT NULL,
     "complement" TEXT,
     "reference" TEXT,
-    "commerce_id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "deleteAt" TIMESTAMP(3),
     "updateAt" TIMESTAMP(3),
@@ -123,7 +100,7 @@ CREATE TABLE "commerces_address" (
     "updateBy" TEXT,
     "deleteBy" TEXT,
 
-    CONSTRAINT "commerces_address_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "address_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -190,25 +167,55 @@ CREATE TABLE "roles" (
 );
 
 -- CreateTable
-CREATE TABLE "users_roles" (
-    "id" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
-    "role_id" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "deleteAt" TIMESTAMP(3),
-    "updateAt" TIMESTAMP(3),
-    "createBy" TEXT,
-    "updateBy" TEXT,
-    "deleteBy" TEXT,
+CREATE TABLE "_users_commerces" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
 
-    CONSTRAINT "users_roles_pkey" PRIMARY KEY ("id")
+-- CreateTable
+CREATE TABLE "_address_commerces" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_address_users" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_users_roles" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
--- AddForeignKey
-ALTER TABLE "users_addresses" ADD CONSTRAINT "users_addresses_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "_users_commerces_AB_unique" ON "_users_commerces"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_users_commerces_B_index" ON "_users_commerces"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_address_commerces_AB_unique" ON "_address_commerces"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_address_commerces_B_index" ON "_address_commerces"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_address_users_AB_unique" ON "_address_users"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_address_users_B_index" ON "_address_users"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_users_roles_AB_unique" ON "_users_roles"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_users_roles_B_index" ON "_users_roles"("B");
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories_products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -217,10 +224,7 @@ ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("
 ALTER TABLE "commerces" ADD CONSTRAINT "commerces_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories_commerces"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "commerces_address" ADD CONSTRAINT "commerces_address_commerce_id_fkey" FOREIGN KEY ("commerce_id") REFERENCES "commerces"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "requests" ADD CONSTRAINT "requests_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "users_addresses"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "requests" ADD CONSTRAINT "requests_address_id_fkey" FOREIGN KEY ("address_id") REFERENCES "address"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "requests" ADD CONSTRAINT "requests_commerce_id_fkey" FOREIGN KEY ("commerce_id") REFERENCES "commerces"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -235,7 +239,25 @@ ALTER TABLE "requests_products" ADD CONSTRAINT "requests_products_product_id_fke
 ALTER TABLE "users_tokens" ADD CONSTRAINT "users_tokens_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "users_roles" ADD CONSTRAINT "users_roles_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "_users_commerces" ADD CONSTRAINT "_users_commerces_A_fkey" FOREIGN KEY ("A") REFERENCES "commerces"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "users_roles" ADD CONSTRAINT "users_roles_role_id_fkey" FOREIGN KEY ("role_id") REFERENCES "roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "_users_commerces" ADD CONSTRAINT "_users_commerces_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_address_commerces" ADD CONSTRAINT "_address_commerces_A_fkey" FOREIGN KEY ("A") REFERENCES "address"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_address_commerces" ADD CONSTRAINT "_address_commerces_B_fkey" FOREIGN KEY ("B") REFERENCES "commerces"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_address_users" ADD CONSTRAINT "_address_users_A_fkey" FOREIGN KEY ("A") REFERENCES "address"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_address_users" ADD CONSTRAINT "_address_users_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_users_roles" ADD CONSTRAINT "_users_roles_A_fkey" FOREIGN KEY ("A") REFERENCES "roles"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_users_roles" ADD CONSTRAINT "_users_roles_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

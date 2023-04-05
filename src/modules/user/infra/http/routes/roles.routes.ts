@@ -1,55 +1,42 @@
-// import { upload } from '@config/upload';
 import { ensureAuthenticated } from '@modules/account/infra/http/middlewares/ensureAuthenticated';
-import { CreateUserController } from '@modules/user/services/User/CreateUser/CreateUserController';
+import { CreateRoleController } from '@modules/user/services/Role/CreateRole/CreateRoleController';
 import { DeleteUserController } from '@modules/user/services/User/DeleteUser/DeleteUserController';
 import { FindUserByIdController } from '@modules/user/services/User/FindUserById/FindUserByIdController';
 import { UpdateUserController } from '@modules/user/services/User/UpdateUser/UpdateUserController';
 import { celebrate, Segments, Joi } from 'celebrate';
 import { Router } from 'express';
-// import multer from 'multer';
 
-const usersRouter = Router();
+const rolesRouter = Router();
 
-// const Upload = multer(upload.multer);
+rolesRouter.use(ensureAuthenticated);
 
-const createUserController = new CreateUserController();
+const createRoleController = new CreateRoleController();
 const updateUserController = new UpdateUserController();
 const deleteUserController = new DeleteUserController();
 const findUserByIdController = new FindUserByIdController();
 
-usersRouter.post(
+rolesRouter.post(
   '/',
   celebrate(
     {
       [Segments.BODY]: {
-        name: Joi.string().required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().required(),
-        phone: Joi.string().required(),
-        isAdmin: Joi.boolean(),
-        roles: Joi.array().items(Joi.string().uuid()).required(),
+        role: Joi.string().required(),
       },
     },
     { abortEarly: false },
   ),
-  createUserController.handle,
+  createRoleController.handle,
 );
 
-usersRouter.put(
+rolesRouter.put(
   '/:id',
-  ensureAuthenticated,
   celebrate(
     {
       [Segments.PARAMS]: {
         id: Joi.string().uuid().required(),
       },
       [Segments.BODY]: {
-        name: Joi.string().required(),
-        email: Joi.string().email().required(),
-        password: Joi.string().required(),
-        phone: Joi.string().required(),
-        isAdmin: Joi.boolean().required(),
-        roles: Joi.array().items(Joi.string().uuid()).required(),
+        role: Joi.string().required(),
       },
     },
     { abortEarly: false },
@@ -57,9 +44,8 @@ usersRouter.put(
   updateUserController.handle,
 );
 
-usersRouter.delete(
+rolesRouter.delete(
   '/:id',
-  ensureAuthenticated,
   celebrate({
     [Segments.PARAMS]: {
       id: Joi.string().uuid().required(),
@@ -68,6 +54,6 @@ usersRouter.delete(
   deleteUserController.handle,
 );
 
-usersRouter.get('/me', ensureAuthenticated, findUserByIdController.handle);
+// rolesRouter.get('/me', ensureAuthenticated, findUserByIdController.handle);
 
-export { usersRouter };
+export { rolesRouter };

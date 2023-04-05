@@ -13,12 +13,12 @@ export class CategoryCommerceRepository implements ICategoryCommerceRepository {
 
   public async update(category: CategoryCommerce): Promise<CategoryCommerce> {
     const raw = CategoryCommerceMappers.toPrisma(category);
-    const userUpdate = await prismaClient.categoryCommerce.update({
+    const update = await prismaClient.categoryCommerce.update({
       where: { id: category.id },
       data: raw,
     });
 
-    return CategoryCommerceMappers.toDomain(userUpdate);
+    return CategoryCommerceMappers.toDomain(update);
   }
 
   public async findById(id: string): Promise<CategoryCommerce | null> {

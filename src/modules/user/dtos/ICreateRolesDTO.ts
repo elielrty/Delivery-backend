@@ -1,4 +1,4 @@
 export interface ICreateRolesDTO {
-  id: string;
-  roles: string;
+  createBy: string;
+  role: string;
 }

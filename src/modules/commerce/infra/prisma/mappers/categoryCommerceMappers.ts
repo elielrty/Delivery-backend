@@ -6,7 +6,7 @@ export class CategoryCommerceMappers {
     return {
       id: categoryCommerce.id,
       name: categoryCommerce.name,
-      description: categoryCommerce.description,
+      type: categoryCommerce.type,
       updateBy: categoryCommerce.updateBy,
       createBy: categoryCommerce.createBy,
       updateAt: categoryCommerce.updateAt,
@@ -18,9 +18,23 @@ export class CategoryCommerceMappers {
     return new CategoryCommerce(
       {
         name: raw.name,
-        description: raw.description,
+        type: raw.type,
       },
       raw.id,
     );
+  }
+
+  static toDomainArray(raws: RawCategory[]): CategoryCommerce[] {
+    const categories = raws.map(category => {
+      return new CategoryCommerce(
+        {
+          name: category.name,
+          type: category.type,
+          createdAt: category.createdAt,
+        },
+        category.id,
+      );
+    });
+    return categories;
   }
 }

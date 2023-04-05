@@ -15,7 +15,7 @@ categoryCommerceRouter.post(
     {
       [Segments.BODY]: {
         name: Joi.string().required(),
-        description: Joi.string().required(),
+        type: Joi.string().required(),
       },
     },
     { abortEarly: false },

@@ -2,11 +2,15 @@ import '@modules/user/providers';
 import './providers';
 
 import { CategoryCommerceRepository } from '@modules/commerce/infra/prisma/repositories/categoryCommerceRepository';
+import { CommerceRepository } from '@modules/commerce/infra/prisma/repositories/commerceRepository';
 import { ICategoryCommerceRepository } from '@modules/commerce/repositories/ICategoryCommerceRepository';
+import { ICommerceRepository } from '@modules/commerce/repositories/ICommerceRepository';
 import { CategoryProductRepository } from '@modules/products/infra/prisma/repositories/categoryProductRepository';
 import { ICategoryProductRepository } from '@modules/products/repositories/ICategoryProductsRepository';
+import { RolesRepository } from '@modules/user/infra/prisma/repositories/rolesRepository';
 import { UserRepository } from '@modules/user/infra/prisma/repositories/userRepository';
 import { UserTokensRepository } from '@modules/user/infra/prisma/repositories/userTokensRepository';
+import { IRolesRepository } from '@modules/user/repositories/IRolesRepository';
 import { IUserRepository } from '@modules/user/repositories/IUserRepository';
 import { IUserTokensRepository } from '@modules/user/repositories/IUserTokensRepository';
 import { container } from 'tsyringe';
@@ -26,4 +30,14 @@ container.registerSingleton<ICategoryCommerceRepository>(
 container.registerSingleton<ICategoryProductRepository>(
   'CategoryProductRepository',
   CategoryProductRepository,
+);
+
+container.registerSingleton<IRolesRepository>(
+  'RolesRepository',
+  RolesRepository,
+);
+
+container.registerSingleton<ICommerceRepository>(
+  'CommerceRepository',
+  CommerceRepository,
 );

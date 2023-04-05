@@ -40,7 +40,6 @@ export const upload = {
       fileSize: 1024 * 1024 * 50, // 50MB
     },
     fileFilter: (request, file, callback) => {
-      console.log(file);
       if (
         file.mimetype === 'image/png' ||
         file.mimetype === 'image/jpg' ||

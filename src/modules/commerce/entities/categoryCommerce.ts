@@ -5,7 +5,7 @@ import { Replace } from '@shared/helpers/Replace';
 export interface ICategoryCommerceProps {
   id?: string;
   name: string;
-  description: string;
+  type: string;
   createdAt: Date;
   deleteAt?: Date | null;
   updateAt?: Date | null;
@@ -37,12 +37,12 @@ export class CategoryCommerce {
     return this.props.name;
   }
 
-  public set description(description: string) {
-    this.props.description = description;
+  public set type(type: string) {
+    this.props.type = type;
   }
 
-  public get description() {
-    return this.props.description;
+  public get type() {
+    return this.props.type;
   }
 
   public get createdAt(): Date {

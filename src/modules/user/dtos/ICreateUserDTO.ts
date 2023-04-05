@@ -4,4 +4,5 @@ export interface ICreateUserDTO {
   isAdmin: boolean;
   name: string;
   phone: string | null;
+  roles: string[];
 }

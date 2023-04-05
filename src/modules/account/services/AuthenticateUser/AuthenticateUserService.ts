@@ -40,8 +40,6 @@ export class AuthenticateUserService {
   public async execute({ email, password }: IRequest): Promise<IResponse> {
     const findUserByEmail = await this.userRepository.findByEmail(email);
 
-    console.log(findUserByEmail);
-
     if (!findUserByEmail) {
       throw new AppError('E-mail ou senha incorretos!', 401);
     }
@@ -79,8 +77,6 @@ export class AuthenticateUserService {
       refresh_token_expire_days,
     );
     expires_date.setUTCDate(this.dateProvider.getDay(now));
-
-    // console.log(findUserByEmail);
 
     const userToken = new UserToken({
       user_id: findUserByEmail.id,

@@ -1,5 +1,5 @@
 import { Roles } from '@modules/user/entities/roles';
-import { Roles as RawRoles } from '@prisma/client';
+import { Role as RawRoles } from '@prisma/client';
 
 export class RolesMappers {
   static toPrisma(Roles: Roles) {
@@ -16,8 +16,22 @@ export class RolesMappers {
     return new Roles(
       {
         role: raw.role,
+        createdAt: raw.createdAt,
       },
       raw.id,
     );
+  }
+
+  static toDomainArray(raws: RawRoles[]): Roles[] {
+    const roles = raws.map(role => {
+      return new Roles(
+        {
+          role: role.role,
+          createdAt: role.createdAt,
+        },
+        role.id,
+      );
+    });
+    return roles;
   }
 }
