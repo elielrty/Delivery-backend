@@ -1,22 +1,22 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { DeleteCategoryProductService } from './DeleteCategotyProductService';
+import { DeleteProductService } from './DeleteProductService';
 
-class DeleteCategoryProductController {
+class DeleteProductController {
   public async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const product_id = request.user.id;
+    const user_id = request.user.id;
 
-    const service = container.resolve(DeleteCategoryProductService);
+    const service = container.resolve(DeleteProductService);
 
     await service.execute({
       id,
-      product_id,
+      user_id,
     });
 
     return response.status(204).send();
   }
 }
 
-export { DeleteCategoryProductController };
+export { DeleteProductController };
