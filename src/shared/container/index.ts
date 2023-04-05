@@ -8,6 +8,8 @@ import { ICommerceRepository } from '@modules/commerce/repositories/ICommerceRep
 import { CategoryProductRepository } from '@modules/products/infra/prisma/repositories/categoryProductRepository';
 import { ProductRepository } from '@modules/products/infra/prisma/repositories/productRepository';
 import { ICategoryProductRepository } from '@modules/products/repositories/ICategoryProductsRepository';
+import { IProductRepository } from '@modules/products/repositories/IProductsRepository';
+import { RolesRepository } from '@modules/user/infra/prisma/repositories/rolesRepository';
 import { UserRepository } from '@modules/user/infra/prisma/repositories/userRepository';
 import { UserTokensRepository } from '@modules/user/infra/prisma/repositories/userTokensRepository';
 import { IRolesRepository } from '@modules/user/repositories/IRolesRepository';
