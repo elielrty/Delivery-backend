@@ -16,10 +16,10 @@ export class RolesRepository implements IRolesRepository {
 
   // }
 
-  public async update(Roles: Roles): Promise<Roles> {
-    const raw = RolesMappers.toPrisma(Roles);
+  public async update(roles: Roles): Promise<Roles> {
+    const raw = RolesMappers.toPrisma(roles);
     const RolesUpdate = await prismaClient.role.update({
-      where: { id: Roles.id },
+      where: { id: roles.id },
       data: raw,
     });
 
@@ -27,23 +27,23 @@ export class RolesRepository implements IRolesRepository {
   }
 
   public async findByRole(role: string): Promise<Roles | null> {
-    const Roles = await prismaClient.role.findFirst({ where: { role } });
+    const result = await prismaClient.role.findFirst({ where: { role } });
 
-    if (!Roles) {
+    if (!result) {
       return null;
     }
 
-    return RolesMappers.toDomain(Roles);
+    return RolesMappers.toDomain(result);
   }
 
   public async findById(id: string): Promise<Roles | null> {
-    const Roles = await prismaClient.role.findUnique({ where: { id } });
+    const role = await prismaClient.role.findUnique({ where: { id } });
 
-    if (!Roles) {
+    if (!role) {
       return null;
     }
 
-    return RolesMappers.toDomain(Roles);
+    return RolesMappers.toDomain(role);
   }
 
   public async delete(id: string): Promise<void> {

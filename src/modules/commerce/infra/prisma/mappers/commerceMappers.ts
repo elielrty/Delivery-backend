@@ -8,7 +8,7 @@ import { Commerce as RawCommerce, CategoryCommerce } from '@prisma/client';
 import { CategoryCommerceMappers } from './categoryCommerceMappers';
 
 type commerceWithUsers = RawCommerce & {
-  UserCommerce: UserWithRoles[];
+  users: UserWithRoles[];
   category: CategoryCommerce;
 };
 
@@ -39,9 +39,7 @@ export class CommerceMappers {
         category: CategoryCommerceMappers.toDomain(raw.category),
         isOpen: raw.isOpen,
         phone: raw.phone,
-        users: raw.UserCommerce
-          ? UserMappers.toDomainArray(raw.UserCommerce)
-          : [],
+        users: raw.users ? UserMappers.toDomainArray(raw.users) : [],
       },
       raw.id,
     );

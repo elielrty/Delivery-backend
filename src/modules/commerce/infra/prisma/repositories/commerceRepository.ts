@@ -15,7 +15,7 @@ export class CommerceRepository implements ICommerceRepository {
         phone: raw.phone,
         isOpen: raw.isOpen,
         category: { connect: { id: raw.category_id } },
-        UserCommerce: { connect: raw.users?.map(user => ({ id: user.id })) },
+        users: { connect: raw.users?.map(user => ({ id: user.id })) },
       },
     });
   }
@@ -25,10 +25,18 @@ export class CommerceRepository implements ICommerceRepository {
     const update = await prismaClient.commerce.update({
       where: { id: commerce.id },
       include: {
-        UserCommerce: { include: { UserRole: true } },
+        users: { include: { roles: true } },
         category: true,
       },
-      data: raw,
+      data: {
+        cnpj: raw.cnpj,
+        updateAt: raw.updateAt,
+        updateBy: raw.updateBy,
+        isOpen: raw.isOpen,
+        name: raw.name,
+        phone: raw.phone,
+        users: { connect: raw.users?.map(user => ({ id: user.id })) },
+      },
     });
 
     return CommerceMappers.toDomain(update);
@@ -38,7 +46,7 @@ export class CommerceRepository implements ICommerceRepository {
     const commerce = await prismaClient.commerce.findUnique({
       where: { id },
       include: {
-        UserCommerce: { include: { UserRole: true } },
+        users: { include: { roles: true } },
         category: true,
       },
     });
@@ -58,7 +66,7 @@ export class CommerceRepository implements ICommerceRepository {
     const commerce = await prismaClient.commerce.findFirst({
       where: { name },
       include: {
-        UserCommerce: { include: { UserRole: true } },
+        users: { include: { roles: true } },
         category: true,
       },
     });

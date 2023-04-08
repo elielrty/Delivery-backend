@@ -16,15 +16,15 @@ export class UserRepository implements IUserRepository {
         isAdmin: raw.isAdmin,
         phone: raw.phone,
         deleteAt: raw.deleteAt,
-        UserRole: { connect: raw.roles?.map(role => ({ id: role.id })) },
+        roles: { connect: raw.roles?.map(role => ({ id: role.id })) },
       },
     });
   }
 
   public async findByEmail(email: string): Promise<any | null> {
     const user = await prismaClient.user.findFirst({
-      include: { UserRole: true },
-      where: { email, deleteAt: null },
+      include: { roles: true },
+      where: { email },
     });
 
     if (!user) {
@@ -44,9 +44,9 @@ export class UserRepository implements IUserRepository {
         updateAt: raw.updateAt,
         phone: raw.phone,
         deleteBy: raw.deleteBy,
-        UserRole: { connect: raw.roles?.map(role => ({ id: role.id })) },
+        roles: { connect: raw.roles?.map(role => ({ id: role.id })) },
       },
-      include: { UserRole: true },
+      include: { roles: true },
     });
 
     return UserMappers.toDomain(userUpdate);
@@ -54,8 +54,8 @@ export class UserRepository implements IUserRepository {
 
   public async findById(id: string): Promise<User | null> {
     const user = await prismaClient.user.findFirst({
-      where: { id, deleteAt: null },
-      include: { UserRole: true },
+      where: { id },
+      include: { roles: true },
     });
 
     if (!user) {

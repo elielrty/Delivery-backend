@@ -3,7 +3,7 @@ import { User as RawUser, Role as RawRole } from '@prisma/client';
 
 import { RolesMappers } from './rolesMappers';
 
-export type UserWithRoles = RawUser & { UserRole: RawRole[] };
+export type UserWithRoles = RawUser & { roles: RawRole[] };
 
 export class UserMappers {
   static toPrisma(user: User) {
@@ -30,7 +30,7 @@ export class UserMappers {
         password: raw.password,
         isAdmin: raw.isAdmin,
         phone: raw.phone,
-        roles: raw.UserRole ? RolesMappers.toDomainArray(raw.UserRole) : [],
+        roles: raw.roles ? RolesMappers.toDomainArray(raw.roles) : [],
       },
       raw.id,
     );
@@ -45,7 +45,7 @@ export class UserMappers {
           password: user.password,
           isAdmin: user.isAdmin,
           phone: user.phone,
-          roles: user.UserRole ? RolesMappers.toDomainArray(user.UserRole) : [],
+          roles: user.roles ? RolesMappers.toDomainArray(user.roles) : [],
         },
         user.id,
       );

@@ -11,22 +11,22 @@ datasource db {
 }
 
 model User {
-  id           String      @id @default(uuid())
-  name         String
-  email        String      @unique
-  password     String
-  isAdmin      Boolean     @default(false)
-  phone        String?
-  createdAt    DateTime    @default(now())
-  deleteAt     DateTime?
-  updateAt     DateTime?
-  createBy     String?
-  updateBy     String?
-  deleteBy     String?
-  AddressUser  Address[]   @relation("address_users")
-  UserToken    UserToken[]
-  UserRole     Role[]      @relation("users_roles")
-  UserCommerce Commerce[]  @relation("users_commerces")
+  id        String      @id @default(uuid())
+  name      String
+  email     String      @unique
+  password  String
+  isAdmin   Boolean     @default(false)
+  phone     String?
+  createdAt DateTime    @default(now())
+  deleteAt  DateTime?
+  updateAt  DateTime?
+  createBy  String?
+  updateBy  String?
+  deleteBy  String?
+  address   Address[]   @relation("address_users")
+  userToken UserToken[]
+  roles     Role[]      @relation("users_roles")
+  commerce  Commerce[]  @relation("users_commerces")
 
   @@map("users")
 }
@@ -35,7 +35,7 @@ model CategoryProduct {
   id        String    @id @default(uuid())
   name      String
   type      String
-  Product   Product[]
+  products  Product[]
   createdAt DateTime  @default(now())
   deleteAt  DateTime?
   updateAt  DateTime?
@@ -69,7 +69,7 @@ model CategoryCommerce {
   id        String     @id @default(uuid())
   name      String
   type      String
-  Commerce  Commerce[]
+  commerces Commerce[]
   createdAt DateTime   @default(now())
   deleteAt  DateTime?
   updateAt  DateTime?
@@ -81,64 +81,64 @@ model CategoryCommerce {
 }
 
 model Commerce {
-  id              String           @id @default(uuid())
-  name            String
-  cnpj            String
-  isOpen          Boolean          @default(false)
-  phone           String
-  category        CategoryCommerce @relation(fields: [category_id], references: [id])
-  category_id     String
-  AddressCommerce Address[]        @relation("address_commerces")
-  Requests        Requests[]
-  UserCommerce    User[]           @relation("users_commerces")
-  createdAt       DateTime         @default(now())
-  deleteAt        DateTime?
-  updateAt        DateTime?
-  createBy        String?
-  updateBy        String?
-  deleteBy        String?
+  id          String           @id @default(uuid())
+  name        String
+  cnpj        String
+  isOpen      Boolean          @default(false)
+  phone       String
+  category    CategoryCommerce @relation(fields: [category_id], references: [id])
+  category_id String
+  address     Address[]        @relation("address_commerces")
+  requests    Requests[]
+  users       User[]           @relation("users_commerces")
+  createdAt   DateTime         @default(now())
+  deleteAt    DateTime?
+  updateAt    DateTime?
+  createBy    String?
+  updateBy    String?
+  deleteBy    String?
 
   @@map("commerces")
 }
 
 model Address {
-  id              String     @id @default(uuid())
-  street          String
-  neighborhood    String
-  cep             String
-  number          String
-  state           String
-  city            String
-  complement      String?
-  reference       String?
-  createdAt       DateTime   @default(now())
-  deleteAt        DateTime?
-  updateAt        DateTime?
-  createBy        String?
-  updateBy        String?
-  deleteBy        String?
-  AddressCommerce Commerce[] @relation("address_commerces")
-  AddressUser     User[]     @relation("address_users")
-  Requests        Requests[]
+  id           String     @id @default(uuid())
+  street       String
+  neighborhood String
+  cep          String
+  number       String
+  state        String
+  city         String
+  complement   String?
+  reference    String?
+  createdAt    DateTime   @default(now())
+  deleteAt     DateTime?
+  updateAt     DateTime?
+  createBy     String?
+  updateBy     String?
+  deleteBy     String?
+  commerces    Commerce[] @relation("address_commerces")
+  users        User[]     @relation("address_users")
+  requests     Requests[]
 
   @@map("address")
 }
 
 model Requests {
-  id                String             @id @default(uuid())
-  value             Decimal
-  status            String
-  address           Address            @relation(fields: [address_id], references: [id])
-  address_id        String
-  commerces         Commerce           @relation(fields: [commerce_id], references: [id])
-  commerce_id       String
-  requests_products RequestsProducts[]
-  createdAt         DateTime           @default(now())
-  deleteAt          DateTime?
-  updateAt          DateTime?
-  createBy          String?
-  updateBy          String?
-  deleteBy          String?
+  id          String             @id @default(uuid())
+  value       Decimal
+  status      String
+  address     Address            @relation(fields: [address_id], references: [id])
+  address_id  String
+  commerce    Commerce           @relation(fields: [commerce_id], references: [id])
+  commerce_id String
+  requests    RequestsProducts[]
+  createdAt   DateTime           @default(now())
+  deleteAt    DateTime?
+  updateAt    DateTime?
+  createBy    String?
+  updateBy    String?
+  deleteBy    String?
 
   @@map("requests")
 }
@@ -185,7 +185,7 @@ model Role {
   createBy  String?
   updateBy  String?
   deleteBy  String?
-  UserRole  User[]    @relation("users_roles")
+  users     User[]    @relation("users_roles")
 
   @@map("roles")
 }
