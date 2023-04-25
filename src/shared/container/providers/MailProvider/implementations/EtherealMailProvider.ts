@@ -8,9 +8,10 @@ import { IMailProvider } from '../models/IMailProvider';
 
 @injectable()
 export class EtherealMailProvider implements IMailProvider {
-  private client: Transporter;
+  // private client: Transporter;
 
   constructor(
+    private client: Transporter,
     @inject('MailTemplateProvider')
     private mailTemplateProvider: IMailTemplateProvider,
   ) {

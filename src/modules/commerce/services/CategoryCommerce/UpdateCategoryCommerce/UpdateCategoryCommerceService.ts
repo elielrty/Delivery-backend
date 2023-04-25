@@ -20,7 +20,7 @@ export class UpdateCategoryCommerceService {
     id,
     user_id,
     name,
-    description,
+    type,
   }: IRequest): Promise<CategoryCommerce> {
     const category = await this.categoryCommerceRepository.findById(id);
 
@@ -36,7 +36,7 @@ export class UpdateCategoryCommerceService {
     }
 
     category.name = name;
-    category.description = description;
+    category.type = type;
     category.updateBy = user_id;
     category.updateAt = new Date();
 

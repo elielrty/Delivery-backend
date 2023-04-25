@@ -1,5 +1,5 @@
 export class AppError {
-  public readonly name: string;
+  // public readonly name: string;
 
   public readonly message: string;
 

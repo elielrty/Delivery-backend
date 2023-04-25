@@ -1,0 +1,22 @@
+[
+  {
+    "id":"0d753b45-c17b-44ad-af7a-1bdd884869db",
+    "role": "admin"
+  },
+  {
+    "id":"5fea3d68-5e95-4a00-917f-101dea5af557",
+    "role": "developer"
+  },
+  {
+    "id":"e15536b2-04d4-4647-ad04-0f91c2b9cae9",
+    "role": "client"
+  },
+  {
+    "id":"7e6738e1-57d9-4294-bc74-ff94e9094920",
+    "role": "deliveryman"
+  },
+  {
+    "id":"cc0323e7-8ffd-4cb8-a313-b740498ce5b5",
+    "role": "manager"
+  }
+]

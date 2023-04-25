@@ -1,9 +1,8 @@
-import { User } from '@modules/user/entities/user';
+import { CategoryProduct } from '@modules/products/entities/categoryProduct';
 import { ICategoryProductRepository } from '@modules/products/repositories/ICategoryProductsRepository';
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@shared/error/AppError';
-import { CategoryProduct } from '@prisma/client';
 
 @injectable()
 export class FindCategoryProductsByIdService {

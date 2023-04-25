@@ -1,7 +1,7 @@
 import multer, { Options } from 'multer';
 import path from 'path';
 
-import { AppError } from '@shared/error/AppError';
+// import { AppError } from '@shared/error/AppError';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
@@ -48,7 +48,7 @@ export const upload = {
         callback(null, true);
       } else {
         callback(null, false);
-        callback(new AppError('Tipo de arquivo inválido!'));
+        // callback(new AppError('Tipo de arquivo inválido!'));
       }
     },
   },

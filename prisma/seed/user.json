@@ -1,0 +1,16 @@
+{
+  "id":"0d753b45-c17b-44ad-af7a-1bdd884869db",
+  "name": "developer",
+  "email": "developer@gmail.com",
+  "password": "$2a$12$TNEIkNxAMCNDEo/pjpLFB.dbSBcRVoVcmLU.QHYCEN0LUNXxcXC02",
+  "phone": "819999999",
+  "roles": [
+    {
+      "id":"0d753b45-c17b-44ad-af7a-1bdd884869db"
+    },
+    {
+      "id":"5fea3d68-5e95-4a00-917f-101dea5af557"
+    }
+  ]
+}
+
