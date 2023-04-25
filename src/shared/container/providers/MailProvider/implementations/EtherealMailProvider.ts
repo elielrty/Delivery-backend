@@ -1,5 +1,5 @@
 import { MailConfig } from '@config/mail';
-import nodemailer, { Transporter } from 'nodemailer';
+import nodemailer from 'nodemailer';
 import { injectable, inject } from 'tsyringe';
 
 import { IMailTemplateProvider } from '../../MailTemplateProvider/models/IMailTemplateProvider';
@@ -8,10 +8,17 @@ import { IMailProvider } from '../models/IMailProvider';
 
 @injectable()
 export class EtherealMailProvider implements IMailProvider {
-  // private client: Transporter;
+  private client: nodemailer.Transporter<any> = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'seu-usuario',
+      pass: 'sua-senha',
+    },
+  });
 
   constructor(
-    private client: Transporter,
     @inject('MailTemplateProvider')
     private mailTemplateProvider: IMailTemplateProvider,
   ) {
